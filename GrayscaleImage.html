@@ -1,0 +1,75 @@
+<!-- Code to grayscale an image -->
+<html>
+  <head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Filter Your Images!</title>
+    <style>
+      canvas {
+        width: 600px;
+        height: auto;
+        border: 1px solid black;
+      }
+      
+      #this_to_that {
+        margin-left: 15px;
+        margin-right: 15px;
+        font-size: 108px;
+        color: green;
+      }
+      
+      #view_gray {
+        display: none;
+        font-weight: bold;
+        margin-top: 8px;
+        color: tan;
+        background-color: black;
+        border: 1px solid black;
+        height: 25px;
+        cursor: pointer;
+        transition: 0.6s;
+      }
+      
+      #view_gray:hover {
+        color: black;
+        background-color: tan;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Let's Travel Back In Time!</h1>
+    <canvas id="input_img" style="margin-bottom: 6px"></canvas>
+    <div id="result" style="display: none;">
+      <div style="display: inline"><i id="this_to_that" class="fa fa-long-arrow-right"></i></div>
+      <canvas id="output_img"></canvas>
+    </div><br>
+    <label>Click to upload: </label><input type="file" id="user_img" onchange="showStartImg()" multiple="false"></input><br>
+    <button id="view_gray" onclick="makeBlackWhite()">Create Grayscale Image</button>
+  </body>
+  
+  <script>
+    var init_can = document.getElementById("input_img");
+    var result_can = document.getElementById("output_img");
+    var uploaded;
+
+    function showStartImg () {
+      var image = document.getElementById("user_img");
+      uploaded = new SimpleImage(image);
+      uploaded.drawTo(init_can);
+      document.getElementById("view_gray").style.display = "block";
+    }
+
+    function makeBlackWhite () {
+      document.getElementById("result").style.display = "inline";
+      var grayImg = new SimpleImage(uploaded.getWidth(), uploaded.getHeight());
+      for (var user_pixel of uploaded.values()) {
+        var avg_value = (user_pixel.getRed() + user_pixel.getGreen() + user_pixel.getBlue()) / 3;
+        var out_px = grayImg.getPixel(user_pixel.getX(), user_pixel.getY());
+        out_px.setRed(avg_value);
+        out_px.setGreen(avg_value);
+        out_px.setBlue(avg_value);
+      }
+      grayImg.drawTo(result_can);
+    }
+  </script>
+  <script src="http://www.dukelearntoprogram.com/course1/common/js/image/SimpleImage.js"></script>
+</html>
