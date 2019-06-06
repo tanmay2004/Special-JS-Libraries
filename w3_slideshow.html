@@ -1,0 +1,42 @@
+<html>
+  <head>
+    <title>A Simple Slideshow!</title>
+    <style>
+      html, body {
+        margin: 0;
+      }
+      .autoSlides {
+        width: 100%;
+        height: 100%;
+      }
+      .img_num {
+        position: absolute;
+        top: 93%;
+        left: 94%;
+        font-weight: bold;
+        font-size: 30px;
+      }
+    </style>
+  </head>
+  
+  <body>
+    <img class="autoSlides" src="Something.jpg"></img>
+    <img class="autoSlides" src="IMG_2355.jpg"></img>
+    <img class="autoSlides" src="IMG_1296.jpg"></img>
+    <div class="img_num" id="current"></div>
+  </body>
+  
+  <script src="https://www.w3schools.com/lib/w3.js"></script>
+  <script>
+    w3.slideshow(".autoSlides", 2500);
+    var imgs = document.getElementsByClassName("autoSlides");
+    
+    window.setInterval( function () {
+      for (i=0; i < imgs.length; i++) {
+        if (imgs[i].style.display == "block") {
+          document.getElementById("current").innerHTML = (i+1) + " / " + imgs.length;
+        }
+      }
+    }, 1);
+  </script>
+</html>
